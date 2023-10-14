@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  user
+}
+
+model User {
+  id        String   @id @default(uuid())
+  username  String   @db.VarChar(255)
+  email     String   @unique @db.VarChar(255)
+  picture   String?  @db.Text
+  role      Role     @default(user)
+  lastLogin DateTime @db.DateTime()
+  isActive  Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+}
+
+model Location {
+  id       String  @id @default(uuid())
+  name     String  @db.VarChar(255)
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rooms    Room[]
+  bookings Booking[]
+}
+
+model Room {
+  id         String   @id @default(uuid())
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  locationId String
+  title      String   @db.VarChar(255)
+  capacity   Int      @default(1) @db.Int
+  isActive   Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@index([locationId])
+}
+
+model Booking {
+  id              String   @id @default(uuid())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  location        Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  locationId      String
+  room            Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId          String
+  eventId         String?
+  summary         String   @db.Text
+  description     String?  @db.Text
+  date            DateTime @db.Date
+  fromTime        DateTime @db.DateTime()
+  toTime          DateTime @db.DateTime()
+  guests          String?  @db.Text
+  isCalendarEvent Boolean  @default(false)
+  isActive        Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, locationId, roomId])
+}

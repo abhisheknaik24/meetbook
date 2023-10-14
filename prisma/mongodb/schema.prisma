@@ -1,0 +1,80 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  admin
+  user
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  username  String   @db.String
+  email     String   @unique @db.String
+  picture   String?  @db.String
+  role      Role     @default(user)
+  lastLogin DateTime @db.Date
+  isActive  Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+}
+
+model Location {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String  @db.String
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  rooms    Room[]
+  bookings Booking[]
+}
+
+model Room {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  location   Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  locationId String   @db.ObjectId
+  title      String   @db.String
+  capacity   Int      @default(1) @db.Int
+  isActive   Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@index([locationId])
+}
+
+model Booking {
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String   @db.ObjectId
+  location        Location @relation(fields: [locationId], references: [id], onDelete: Cascade)
+  locationId      String   @db.ObjectId
+  room            Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  roomId          String   @db.ObjectId
+  eventId         String?
+  summary         String   @db.String
+  description     String?  @db.String
+  date            DateTime @db.Date
+  fromTime        DateTime @db.Timestamp
+  toTime          DateTime @db.Timestamp
+  guests          String?  @db.String
+  isCalendarEvent Boolean  @default(false)
+  isActive        Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, locationId, roomId])
+}
