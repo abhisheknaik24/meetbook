@@ -32,7 +32,7 @@ const formSchema = z.object({
   }),
 });
 
-const AddLocationModal = () => {
+export const AddLocationModal = memo(function AddLocationModal() {
   const router = useRouter();
 
   const { type, isOpen, onClose } = useModal();
@@ -51,6 +51,12 @@ const AddLocationModal = () => {
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     try {
       const res = await postLocation(values);
+
+      if (!res.status) {
+        toast.error(res.message);
+
+        return false;
+      }
 
       toast.success(res.message);
 
@@ -99,6 +105,4 @@ const AddLocationModal = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default memo(AddLocationModal);
+});

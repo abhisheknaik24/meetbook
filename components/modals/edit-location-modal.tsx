@@ -10,7 +10,7 @@ import {
 import { useModal } from '@/hooks/use-modal-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
@@ -32,7 +32,7 @@ const formSchema = z.object({
   }),
 });
 
-const EditLocationModal = () => {
+export const EditLocationModal = memo(function EditLocationModal() {
   const router = useRouter();
 
   const { type, isOpen, data: location, onClose } = useModal();
@@ -52,10 +52,16 @@ const EditLocationModal = () => {
     try {
       const newValues = {
         ...values,
-        locationId: location?.data.locationId as string,
+        locationId: location?.locationId as string,
       };
 
       const res = await updateLocation(newValues);
+
+      if (!res.status) {
+        toast.error(res.message);
+
+        return false;
+      }
 
       toast.success(res.message);
 
@@ -71,11 +77,17 @@ const EditLocationModal = () => {
     }
   };
 
+  useEffect(() => {
+    if (!!location?.name) {
+      form.setValue('name', location.name);
+    }
+  }, [form, location]);
+
   if (!isModalOpen) {
     return null;
   }
 
-  if (!location) {
+  if (!location?.name) {
     return null;
   }
 
@@ -83,7 +95,7 @@ const EditLocationModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Location {location?.data.name}</DialogTitle>
+          <DialogTitle>Update Location {location.name}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
@@ -108,6 +120,4 @@ const EditLocationModal = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default memo(EditLocationModal);
+});

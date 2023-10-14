@@ -14,7 +14,7 @@ const LandingPage = () => {
         </h1>
       </div>
       <LoginButton>
-        Get meetbook <ArrowRight />
+        Get Meetbook <ArrowRight />
       </LoginButton>
       <div className='relative h-48 w-48'>
         <Image

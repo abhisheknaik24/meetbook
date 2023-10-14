@@ -10,7 +10,7 @@ import {
 import { useModal } from '@/hooks/use-modal-store';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useParams, useRouter } from 'next/navigation';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import * as z from 'zod';
@@ -38,7 +38,7 @@ const formSchema = z.object({
   ),
 });
 
-const EditRoomModal = () => {
+export const EditRoomModal = memo(function EditRoomModal() {
   const router = useRouter();
 
   const params = useParams();
@@ -62,10 +62,16 @@ const EditRoomModal = () => {
       const newValues = {
         ...values,
         locationId: params.locationId as string,
-        roomId: room?.data.roomId as string,
+        roomId: room?.roomId as string,
       };
 
       const res = await updateRoom(newValues);
+
+      if (!res.status) {
+        toast.error(res.message);
+
+        return false;
+      }
 
       toast.success(res.message);
 
@@ -81,11 +87,19 @@ const EditRoomModal = () => {
     }
   };
 
+  useEffect(() => {
+    if (!!room?.title && !!room?.capacity) {
+      form.setValue('title', room.title);
+
+      form.setValue('capacity', room.capacity);
+    }
+  }, [form, room]);
+
   if (!isModalOpen) {
     return null;
   }
 
-  if (!room) {
+  if (!room?.title || !room?.capacity) {
     return null;
   }
 
@@ -93,7 +107,7 @@ const EditRoomModal = () => {
     <Dialog open={isModalOpen} onOpenChange={onClose}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Update Room {room?.data.title}</DialogTitle>
+          <DialogTitle>Update Room {room.title}</DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
@@ -140,6 +154,4 @@ const EditRoomModal = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default memo(EditRoomModal);
+});

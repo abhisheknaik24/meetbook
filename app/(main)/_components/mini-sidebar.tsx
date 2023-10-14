@@ -24,9 +24,9 @@ import { signOut, useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { memo } from 'react';
 import { useQuery } from 'react-query';
-import MiniSidebarItem from './mini-sidebar-item';
+import { MiniSidebarItem } from './mini-sidebar-item';
 
-const MiniSidebar = () => {
+export const MiniSidebar = memo(function MiniSidebar() {
   const { data: session } = useSession();
 
   const params = useParams();
@@ -121,6 +121,4 @@ const MiniSidebar = () => {
       </div>
     </div>
   );
-};
-
-export default memo(MiniSidebar);
+});

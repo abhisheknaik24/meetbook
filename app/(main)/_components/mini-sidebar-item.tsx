@@ -39,11 +39,11 @@ interface MiniSidebarItemProps {
   active: boolean;
 }
 
-const MiniSidebarItem = ({
+export const MiniSidebarItem = memo(function MiniSidebarItem({
   locationId,
   name,
   active,
-}: MiniSidebarItemProps) => {
+}: MiniSidebarItemProps) {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -101,9 +101,7 @@ const MiniSidebarItem = ({
         {session?.user.role === 'admin' && (
           <ContextMenuContent>
             <ContextMenuItem
-              onClick={() =>
-                onOpen('editLocation', { data: { locationId, name } })
-              }
+              onClick={() => onOpen('editLocation', { locationId, name })}
             >
               Edit
             </ContextMenuItem>
@@ -129,6 +127,4 @@ const MiniSidebarItem = ({
       </AlertDialogContent>
     </AlertDialog>
   );
-};
-
-export default memo(MiniSidebarItem);
+});

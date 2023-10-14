@@ -9,9 +9,9 @@ import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { memo } from 'react';
 import { useQuery } from 'react-query';
-import SidebarItem from './sidebar-item';
+import { SidebarItem } from './sidebar-item';
 
-const Sidebar = () => {
+export const Sidebar = memo(function Sidebar() {
   const { data: session } = useSession();
 
   const params = useParams();
@@ -90,6 +90,4 @@ const Sidebar = () => {
       </div>
     </div>
   );
-};
-
-export default memo(Sidebar);
+});
