@@ -10,12 +10,7 @@ interface LoginButtonProps {
 
 const LoginButton = ({ children }: LoginButtonProps) => {
   return (
-    <Button
-      className='text-lg font-semibold'
-      onClick={() =>
-        signIn('google', { redirect: true, callbackUrl: '/dashboard' })
-      }
-    >
+    <Button className='text-lg font-semibold' onClick={() => signIn('google')}>
       {children}
     </Button>
   );
