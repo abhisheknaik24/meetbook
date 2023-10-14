@@ -18,16 +18,16 @@ interface MainLayoutProps {
 
 const MainLayout = ({ children }: MainLayoutProps) => {
   return (
-    <>
-      <div className='h-full w-full hidden fixed md:block'>
+    <div className='relative h-screen w-full'>
+      <div className='fixed h-full w-full hidden md:block'>
         <MiniSidebar />
         <Sidebar />
       </div>
-      <div className='h-full w-full px-1 md:pl-80 md:pr-0'>
+      <div className='relative h-full w-full px-1 md:pl-80 md:pr-0'>
         <Header />
         {children}
       </div>
-    </>
+    </div>
   );
 };
 

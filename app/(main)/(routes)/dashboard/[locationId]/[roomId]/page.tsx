@@ -138,7 +138,10 @@ const RoomPage = () => {
                   roomId={params.roomId as string}
                   bookingId={booking.id}
                   summary={booking.summary}
-                  fromTime={utcToZonedTime(new Date(booking.fromTime), timeZone)}
+                  fromTime={utcToZonedTime(
+                    new Date(booking.fromTime),
+                    timeZone
+                  )}
                   toTime={utcToZonedTime(new Date(booking.toTime), timeZone)}
                   user={booking.user}
                   active={
