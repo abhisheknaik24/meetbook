@@ -2,10 +2,10 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import { memo } from 'react';
-import MiniSidebar from './mini-sidebar';
-import Sidebar from './sidebar';
+import { MiniSidebar } from './mini-sidebar';
+import { Sidebar } from './sidebar';
 
-const Header = () => {
+export const Header = memo(function Header() {
   return (
     <div className='md:hidden h-20 w-full flex items-center justify-start'>
       <Sheet>
@@ -21,6 +21,4 @@ const Header = () => {
       </Sheet>
     </div>
   );
-};
-
-export default memo(Header);
+});

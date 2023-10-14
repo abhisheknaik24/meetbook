@@ -1,9 +1,10 @@
 import { Logo } from '@/components/logo/logo';
 import { ModeToggle } from '@/components/mode-toggle/mode-toggle';
 import { Separator } from '@/components/ui/separator';
+import { memo } from 'react';
 import LoginButton from './login-button';
 
-const Navbar = () => {
+export const Navbar = memo(function Navbar() {
   return (
     <div className='h-10 w-full flex items-center justify-between'>
       <Logo />
@@ -14,6 +15,4 @@ const Navbar = () => {
       </div>
     </div>
   );
-};
-
-export default Navbar;
+});

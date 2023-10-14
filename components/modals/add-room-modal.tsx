@@ -38,7 +38,7 @@ const formSchema = z.object({
   ),
 });
 
-const AddRoomModal = () => {
+export const AddRoomModal = memo(function AddRoomModal() {
   const router = useRouter();
 
   const params = useParams();
@@ -65,6 +65,12 @@ const AddRoomModal = () => {
       };
 
       const res = await postRoom(newValues);
+
+      if (!res.status) {
+        toast.error(res.message);
+
+        return false;
+      }
 
       toast.success(res.message);
 
@@ -135,6 +141,4 @@ const AddRoomModal = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default memo(AddRoomModal);
+});

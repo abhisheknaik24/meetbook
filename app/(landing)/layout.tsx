@@ -3,7 +3,7 @@ import { getServerSession } from 'next-auth';
 import { Poppins } from 'next/font/google';
 import { redirect } from 'next/navigation';
 import { authOptions } from '../api/auth/[...nextauth]/route';
-import Navbar from './_components/navbar';
+import { Navbar } from './_components/navbar';
 
 const font = Poppins({
   subsets: ['latin'],

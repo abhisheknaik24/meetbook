@@ -42,7 +42,7 @@ interface BookingProps {
   };
 }
 
-const Booking = ({
+export const Booking = memo(function Booking({
   locationId,
   roomId,
   bookingId,
@@ -51,7 +51,7 @@ const Booking = ({
   toTime,
   user,
   active,
-}: BookingProps) => {
+}: BookingProps) {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -81,9 +81,7 @@ const Booking = ({
     <div
       className={cn(
         'h-24 w-full flex items-center justify-between p-4 rounded-md cursor-pointer',
-        active
-          ? 'bg-secondary border-2 border-foreground/50'
-          : 'bg-secondary/80 hover:bg-secondary/50'
+        active ? 'bg-secondary' : 'bg-secondary/50'
       )}
     >
       <div className='flex flex-col items-start justify-center'>
@@ -105,7 +103,7 @@ const Booking = ({
           <span className='mx-1'>-</span>
           {format(toTime, 'hh:mm aa')}
         </p>
-        <p className='text-sm font-semibold'>{user.username}</p>
+        <p className='text-sm font-semibold'>Booked by : {user.username}</p>
       </div>
       {(session?.user.role === 'admin' || session?.user.id === user.id) &&
         !active && (
@@ -145,6 +143,4 @@ const Booking = ({
         )}
     </div>
   );
-};
-
-export default memo(Booking);
+});

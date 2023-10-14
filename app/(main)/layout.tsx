@@ -1,16 +1,6 @@
-import { Skeleton } from '@/components/ui/skeleton';
-import dynamic from 'next/dynamic';
-import Header from './_components/header';
-
-const MiniSidebar = dynamic(() => import('./_components/mini-sidebar'), {
-  ssr: false,
-  loading: () => <Skeleton className='h-full w-20 fixed' />,
-});
-
-const Sidebar = dynamic(() => import('./_components/sidebar'), {
-  ssr: false,
-  loading: () => <Skeleton className='h-full w-60 fixed left-20' />,
-});
+import { Header } from './_components/header';
+import { MiniSidebar } from './_components/mini-sidebar';
+import { Sidebar } from './_components/sidebar';
 
 interface MainLayoutProps {
   children: React.ReactNode;

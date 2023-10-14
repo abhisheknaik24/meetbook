@@ -60,7 +60,7 @@ const formSchema = z.object({
   isCalendarEvent: z.boolean(),
 });
 
-const AddBookingModal = () => {
+export const AddBookingModal = memo(function AddBookingModal() {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -158,6 +158,12 @@ const AddBookingModal = () => {
       };
 
       const res = await postBooking(newValues);
+
+      if (!res.status) {
+        toast.error(res.message);
+
+        return false;
+      }
 
       toast.success(res.message);
 
@@ -463,6 +469,4 @@ const AddBookingModal = () => {
       </DialogContent>
     </Dialog>
   );
-};
-
-export default memo(AddBookingModal);
+});

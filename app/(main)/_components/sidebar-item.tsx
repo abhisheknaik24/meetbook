@@ -38,14 +38,14 @@ interface SidebarItemProps {
   active: boolean;
 }
 
-const SidebarItem = ({
+export const SidebarItem = memo(function SidebarItem({
   locationId,
   roomId,
   title,
   capacity,
   isAvailable,
   active,
-}: SidebarItemProps) => {
+}: SidebarItemProps) {
   const { data: session } = useSession();
 
   const router = useRouter();
@@ -113,7 +113,7 @@ const SidebarItem = ({
                   className='text-secondary-foreground/50 p-0 hover:text-secondary-foreground/40'
                   variant='ghost'
                   onClick={() =>
-                    onOpen('editRoom', { data: { roomId, title, capacity } })
+                    onOpen('editRoom', { roomId, title, capacity })
                   }
                 >
                   <Edit size={20} />
@@ -164,6 +164,4 @@ const SidebarItem = ({
       )}
     </Link>
   );
-};
-
-export default memo(SidebarItem);
+});

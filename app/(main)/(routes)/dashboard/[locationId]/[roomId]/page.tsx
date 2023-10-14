@@ -1,26 +1,21 @@
 'use client';
 
 import { getRoomDetails } from '@/actions/getRoomDetails';
+import { Booking } from '@/app/(main)/_components/booking';
 import { Time } from '@/components/time/time';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useModal } from '@/hooks/use-modal-store';
 import { cn } from '@/lib/utils';
 import { utcToZonedTime } from 'date-fns-tz';
-import dynamic from 'next/dynamic';
 import { useParams } from 'next/navigation';
 import { memo, useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 
-const Booking = dynamic(() => import('@/app/(main)/_components/booking'), {
-  ssr: false,
-  loading: () => <Skeleton className='h-24 w-full' />,
-});
-
 const RoomPage = () => {
   const params = useParams();
 
-  const [color, setColor] = useState<string | null>(null);
+  const [color, setColor] = useState<string | undefined>(undefined);
 
   const { onOpen } = useModal();
 
@@ -84,7 +79,7 @@ const RoomPage = () => {
   return (
     <div
       className={cn(
-        'h-full w-full relative bg-gradient-to-b rounded-md px-6 py-4 overflow-y-auto scrollbar-hide',
+        'h-full w-full relative bg-gradient-to-b from-75% px-6 py-4 overflow-y-auto scrollbar-hide',
         color
       )}
     >
