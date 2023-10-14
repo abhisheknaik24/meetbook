@@ -26,7 +26,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
     <html lang='en' suppressHydrationWarning>
       <body
         className={cn(
-          'mx-auto h-screen w-screen max-w-screen-2xl overflow-x-hidden overflow-y-auto scrollbar-hide',
+          'relative h-full w-full max-w-screen-2xl mx-auto overflow-x-hidden overflow-y-auto scrollbar-hide',
           font.className
         )}
       >

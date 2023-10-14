@@ -2,12 +2,12 @@
 
 import { Button } from '@/components/ui/button';
 
-interface GlobalErrorProps {
+interface MainErrorProps {
   error: Error;
   reset: () => void;
 }
 
-const GlobalError = ({ error, reset }: GlobalErrorProps) => {
+const MainError = ({ error, reset }: MainErrorProps) => {
   return (
     <div className='fixed inset-0 h-full w-full flex flex-col items-center justify-center gap-4 bg-background z-50'>
       <h3 className='text-2xl text-rose-500 font-semibold capitalize'>
@@ -20,4 +20,4 @@ const GlobalError = ({ error, reset }: GlobalErrorProps) => {
   );
 };
 
-export default GlobalError;
+export default MainError;
