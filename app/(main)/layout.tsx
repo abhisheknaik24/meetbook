@@ -23,7 +23,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         <MiniSidebar />
         <Sidebar />
       </div>
-      <div className='relative h-full w-full px-1 md:pl-80 md:pr-0'>
+      <div className='h-full w-full px-1 md:pl-80 md:pr-0'>
         <Header />
         {children}
       </div>
