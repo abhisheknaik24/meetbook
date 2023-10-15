@@ -98,7 +98,7 @@ export const AddBookingModal = memo(function AddBookingModal() {
   };
 
   const handleAddGuestClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (Number(room.data.capacity) - 1 <= guests.length) {
+    if (Number(room?.capacity) - 1 <= guests.length) {
       toast.error('Room capacity full!');
 
       return false;
@@ -187,7 +187,7 @@ export const AddBookingModal = memo(function AddBookingModal() {
     return null;
   }
 
-  if (!room) {
+  if (!room?.title || !room?.capacity) {
     return null;
   }
 
@@ -197,7 +197,7 @@ export const AddBookingModal = memo(function AddBookingModal() {
         <DialogHeader>
           <DialogTitle>Add New Booking</DialogTitle>
           <DialogDescription>
-            For room {room?.data.title} is capacity {room?.data.capacity}
+            For room {room.title} is capacity {room.capacity}
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -413,10 +413,10 @@ export const AddBookingModal = memo(function AddBookingModal() {
             <div className='grid grid-cols-6 items-end gap-2 '>
               <FormItem className='col-span-5' onChange={handleChange}>
                 <FormLabel>
-                  Guests (Capacity : {room?.data.capacity}) (Remaining :{' '}
+                  Guests (Capacity : {room.capacity}) (Remaining :{' '}
                   {!!guests.length
-                    ? room?.data.capacity - guests.length - 1
-                    : room?.data.capacity - 1}
+                    ? room.capacity - guests.length - 1
+                    : room.capacity - 1}
                   )
                 </FormLabel>
                 <FormControl>
