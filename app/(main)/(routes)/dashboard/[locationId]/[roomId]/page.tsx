@@ -102,7 +102,12 @@ const RoomPage = () => {
               className='text-xl whitespace-nowrap'
               variant='secondary'
               size='lg'
-              onClick={() => onOpen('addBooking', { data: res.data.room })}
+              onClick={() =>
+                onOpen('addBooking', {
+                  title: res.data.room.title,
+                  capacity: res.data.room.capacity,
+                })
+              }
             >
               Book
             </Button>
